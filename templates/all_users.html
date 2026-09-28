@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>All Users | FitBuddy AI</title>
+  <style>
+    :root { color-scheme: light; --ink: #19332b; --muted: #64776d; --paper: #f2f5ef; --white: #fff; --green: #196b4b; --line: #dfe7dd; }
+    * { box-sizing: border-box; }
+    body { margin: 0; color: var(--ink); background: radial-gradient(ellipse at 5% 0%, #e0efcb 0, transparent 34%), var(--paper); font: 14px 'DM Sans', 'Segoe UI', sans-serif; }
+    header { max-width: 1240px; margin: auto; padding: 28px 28px 18px; display: flex; align-items: center; justify-content: space-between; }
+    a { color: var(--green); text-decoration: none; font-weight: 700; }
+    main { max-width: 1240px; margin: auto; padding: 24px 28px 60px; }
+    .eyebrow { color: var(--green); font-size: 12px; letter-spacing: 1.5px; font-weight: 700; text-transform: uppercase; }
+    h1 { font: 800 34px/1.15 'Segoe UI', sans-serif; margin: 10px 0 6px; }
+    .sub { color: var(--muted); margin: 0 0 22px; }
+    .table-wrap { overflow-x: auto; background: var(--white); border: 1px solid var(--line); border-radius: 8px; box-shadow: 0 12px 32px #284b3210; }
+    table { width: 100%; min-width: 970px; border-collapse: collapse; }
+    th, td { padding: 14px 16px; text-align: left; vertical-align: top; border-bottom: 1px solid var(--line); }
+    th { color: #52685d; background: #f7f9f5; font-size: 11px; text-transform: uppercase; letter-spacing: 1px; }
+    tr:last-child td { border-bottom: 0; }
+    .identity { min-width: 145px; font-weight: 700; }
+    .meta { color: var(--muted); font-size: 12px; line-height: 1.7; margin-top: 5px; }
+    .plan { min-width: 280px; max-width: 420px; white-space: pre-wrap; overflow-wrap: anywhere; line-height: 1.55; color: #40564a; }
+    .plan-label { display: block; color: var(--green); font-size: 11px; font-weight: 700; text-transform: uppercase; margin-bottom: 6px; }
+    .empty { color: #8a9b8f; font-style: italic; }
+    .no-users { text-align: center; color: var(--muted); padding: 38px 20px; }
+    @media (max-width: 600px) { header, main { padding-left: 18px; padding-right: 18px; } h1 { font-size: 29px; } }
+  </style>
+</head>
+<body>
+  <header><a href="/">FitBuddy AI</a><a href="/">Back to app</a></header>
+  <main>
+    <div class="eyebrow">Administration</div>
+    <h1>All users</h1>
+    <p class="sub">User profiles and saved workout plans.</p>
+    <div class="table-wrap">
+      {% if users %}
+      <table>
+        <thead><tr><th>User</th><th>Goal &amp; level</th><th>Original plan</th><th>Updated plan</th></tr></thead>
+        <tbody>
+          {% for user in users %}
+            {% if user.workout_plans %}
+              {% for plan in user.workout_plans %}
+              <tr>
+                <td class="identity">{{ user.name }}<div class="meta">ID {{ user.id }} · Age {{ user.age }} · {{ user.weight }} kg</div></td>
+                <td>{{ user.goal }}<div class="meta">{{ user.intensity|title }} · {{ user.schedule }} days</div></td>
+                <td class="plan"><span class="plan-label">Original</span>{{ plan.original_plan }}</td>
+                <td class="plan"><span class="plan-label">Updated</span>{% if plan.updated_plan %}{{ plan.updated_plan }}{% else %}<span class="empty">No revised plan</span>{% endif %}</td>
+              </tr>
+              {% endfor %}
+            {% else %}
+              <tr>
+                <td class="identity">{{ user.name }}<div class="meta">ID {{ user.id }} · Age {{ user.age }} · {{ user.weight }} kg</div></td>
+                <td>{{ user.goal }}<div class="meta">{{ user.intensity|title }} · {{ user.schedule }} days</div></td>
+                <td class="plan"><span class="empty">No plan saved</span></td>
+                <td class="plan"><span class="empty">No revised plan</span></td>
+              </tr>
+            {% endif %}
+          {% endfor %}
+        </tbody>
+      </table>
+      {% else %}
+      <div class="no-users">No users have been saved yet.</div>
+      {% endif %}
+    </div>
+  </main>
+</body>
+</html>

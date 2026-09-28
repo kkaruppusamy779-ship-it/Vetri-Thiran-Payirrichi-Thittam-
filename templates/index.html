@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="theme-color" content="#f2f5ef">
+	<title>FitBuddy AI</title>
+	<style>
+		@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap');
+		:root { color-scheme: light; --ink: #19332b; --muted: #64776d; --paper: #f2f5ef; --white: #fff; --green: #196b4b; --line: #dfe7dd; }
+		* { box-sizing: border-box; }
+		body { margin: 0; color: var(--ink); background: radial-gradient(ellipse at 5% 0%, #e0efcb 0, transparent 34%), var(--paper); font: 16px 'DM Sans', sans-serif; min-height: 100vh; }
+		header { max-width: 1120px; margin: auto; padding: 28px 28px 18px; display: flex; align-items: center; justify-content: space-between; }
+		.brand { font: 800 21px Manrope, sans-serif; display: flex; align-items: center; gap: 10px; }
+		.mark { width: 34px; height: 34px; border-radius: 10px; background: var(--green); color: white; display: grid; place-items: center; font-size: 18px; }
+		.status { color: var(--muted); font-size: 13px; display: flex; align-items: center; gap: 8px; }
+		.dot { width: 8px; height: 8px; background: #69a66b; border-radius: 50%; }
+		main { max-width: 1120px; margin: auto; padding: 26px 28px 60px; }
+		.intro { display: grid; grid-template-columns: 1.2fr .8fr; align-items: end; gap: 30px; margin: 20px 0 30px; }
+		.eyebrow { color: var(--green); font-size: 12px; letter-spacing: 1.5px; font-weight: 700; text-transform: uppercase; }
+		h1 { font: 800 44px/1.08 Manrope, sans-serif; margin: 12px 0; max-width: 580px; }
+		.intro p { color: var(--muted); max-width: 520px; line-height: 1.6; margin: 0; }
+		.quote { border-left: 3px solid #b5ce65; padding: 12px 0 12px 18px; color: #4e6557; line-height: 1.5; }
+		.workspace { display: grid; grid-template-columns: minmax(310px, .82fr) 1.18fr; gap: 22px; align-items: start; }
+		.panel { background: var(--white); border: 1px solid var(--line); border-radius: 8px; padding: 24px; box-shadow: 0 12px 32px #284b3210; }
+		h2 { font: 700 20px Manrope, sans-serif; margin: 0 0 6px; }
+		.sub { color: var(--muted); font-size: 13px; margin: 0 0 22px; }
+		.fields { display: grid; grid-template-columns: 1fr 1fr; gap: 15px 12px; }
+		label { display: block; font-size: 12px; color: #52685d; font-weight: 700; margin-bottom: 7px; }
+		.wide { grid-column: 1 / -1; }
+		input, select, textarea { width: 100%; border: 1px solid #d7e1d6; border-radius: 5px; color: var(--ink); background: #fff; font: 14px 'DM Sans', sans-serif; }
+		input, select { height: 44px; padding: 0 12px; }
+		textarea { min-height: 275px; padding: 14px; line-height: 1.65; resize: vertical; }
+		input:focus, select:focus, textarea:focus { outline: 2px solid #86b39b; outline-offset: 1px; }
+		.actions { display: flex; gap: 10px; margin-top: 20px; }
+		button { min-height: 44px; border: 0; border-radius: 5px; padding: 0 16px; cursor: pointer; font: 700 14px 'DM Sans', sans-serif; }
+		button:disabled { opacity: .65; cursor: wait; }
+		.primary { color: white; background: var(--green); flex: 1; }
+		.primary:hover { background: #10573b; }
+		.secondary { background: #edf3e9; color: var(--green); }
+		.notice { color: #7a897e; font-size: 11px; line-height: 1.5; margin: 16px 0 0; }
+		#message { color: var(--green); font-size: 13px; margin-top: 12px; min-height: 18px; }
+		@media (max-width: 760px) { header { padding: 20px 18px 12px; } main { padding: 16px 18px 40px; } .intro { display: block; margin: 18px 0 24px; } h1 { font-size: 36px; } .quote { display: none; } .workspace { grid-template-columns: 1fr; gap: 16px; } }
+		@media (max-width: 420px) { .fields { grid-template-columns: 1fr; } .wide { grid-column: auto; } .actions { flex-direction: column; } }
+	</style>
+</head>
+<body>
+	<header>
+		<div class="brand"><span class="mark" aria-hidden="true">+</span> FitBuddy <span style="font-weight:500;color:#75877b">AI</span></div>
+		<div class="status"><span class="dot"></span> Your personal training space</div>
+	</header>
+	<main>
+		<section class="intro">
+			<div><div class="eyebrow">A little stronger, every day</div><h1>Make a plan that fits your life.</h1><p>Share your starting point and goal. FitBuddy will shape a simple weekly routine around you.</p></div>
+			<div class="quote">“Consistency beats intensity when intensity doesn’t last.”</div>
+		</section>
+		<section class="workspace">
+			<form class="panel" id="profile-form">
+				<h2>Your starting point</h2><p class="sub">Tell us a little about yourself.</p>
+				<div class="fields">
+					<div class="wide"><label for="name">Name</label><input id="name" name="name" autocomplete="name" placeholder="Your name" required maxlength="100"></div>
+					<div><label for="age">Age</label><input id="age" name="age" type="number" min="13" max="100" placeholder="25" required></div>
+					<div><label for="weight">Weight (kg)</label><input id="weight" name="weight" type="number" min="1" max="500" step="0.1" placeholder="70" required></div>
+					<div><label for="goal">Main goal</label><select id="goal" name="goal"><option value="fitness">Build general fitness</option><option value="strength">Get stronger</option><option value="weight-loss">Lose weight</option></select></div>
+					<div><label for="intensity">Experience</label><select id="intensity" name="intensity"><option value="beginner">Beginner</option><option value="moderate">Moderate</option><option value="advanced">Advanced</option></select></div>
+				</div>
+				<div class="actions"><button class="primary" id="generate" type="button">Create my plan</button><button class="secondary" type="submit">Save profile</button></div>
+				<div id="message" role="status" aria-live="polite"></div>
+			</form>
+			<section class="panel" aria-labelledby="plan-title">
+				<h2 id="plan-title">Your weekly plan</h2><p class="sub">Edit the plan with your feedback, then save the revision.</p>
+				<label for="plan-text">Plan</label>
+				<textarea id="plan-text" placeholder="Your plan will appear here when you create one." aria-label="Fitness plan"></textarea>
+				<div class="actions"><button class="secondary" id="save-revision" type="button" disabled>Save revision</button></div>
+				<p class="notice">General wellness information only. Start gently, stop if you feel pain or unwell, and consult a health professional before starting a new exercise program.</p>
+			</section>
+		</section>
+	</main>
+	<script>
+		const form = document.querySelector('#profile-form');
+		const message = document.querySelector('#message');
+		const planText = document.querySelector('#plan-text');
+		const saveRevision = document.querySelector('#save-revision');
+		function profile() {
+			const data = new FormData(form);
+			return { name: data.get('name'), age: Number(data.get('age')), weight: Number(data.get('weight')), goal: data.get('goal'), intensity: data.get('intensity') };
+		}
+		form.addEventListener('submit', async (event) => {
+			event.preventDefault();
+			if (!form.reportValidity()) return;
+			try {
+				const response = await fetch('/api/users', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ ...profile(), user_id: form.dataset.userId ? Number(form.dataset.userId) : null }) });
+				const result = await response.json();
+				if (!response.ok) throw new Error(result.detail || 'Could not save profile.');
+				form.dataset.userId = result.id;
+				message.textContent = 'Profile saved.';
+			} catch (error) { message.textContent = error.message; }
+		});
+		document.querySelector('#generate').addEventListener('click', async (event) => {
+			if (!form.reportValidity()) return;
+			const button = event.currentTarget;
+			button.disabled = true;
+			message.textContent = 'Building your plan…';
+			try {
+				const response = await fetch('/api/plans', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ ...profile(), user_id: form.dataset.userId ? Number(form.dataset.userId) : null }) });
+				const result = await response.json();
+				if (!response.ok) throw new Error(result.detail || 'Could not create a plan.');
+				form.dataset.userId = result.user_id;
+				planText.value = result.plan;
+				saveRevision.disabled = false;
+				message.textContent = result.source === 'gemini' ? 'AI plan created and saved.' : 'Starter plan created and saved.';
+			} catch (error) { message.textContent = error.message; }
+			finally { button.disabled = false; }
+		});
+		saveRevision.addEventListener('click', async () => {
+			if (!form.dataset.userId || !planText.value.trim()) return;
+			saveRevision.disabled = true;
+			try {
+				const response = await fetch(`/api/users/${form.dataset.userId}/plan`, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ updated_text: planText.value }) });
+				const result = await response.json();
+				if (!response.ok) throw new Error(result.detail || 'Could not save revision.');
+				message.textContent = 'Plan revision saved. The original plan is preserved.';
+			} catch (error) { message.textContent = error.message; }
+			finally { saveRevision.disabled = false; }
+		});
+	</script>
+</body>
+</html>
